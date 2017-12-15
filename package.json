@@ -20,6 +20,13 @@
                 "command": "resources.showQuickApiAssist",
                 "title": "Resources: Show Quick API Assist"
             }
+        ],
+        "keybindings": [
+            {
+                "command": "resources.showQuickApiAssist",
+                "key": "ctrl+shift+r",
+                "mac": "cmd+shift+r"
+            }
         ]
     },
     "scripts": {

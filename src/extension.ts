@@ -3,6 +3,15 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+interface ResourceStep {
+    label:           string;
+    description:     null;
+    terminalCommand: string;
+    message?:        string;
+}
+
+let terminal : vscode.Terminal = null;
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -18,7 +27,40 @@ export function activate(context: vscode.ExtensionContext) {
         // The code you place here will be executed every time your command is executed
 
         // Display a message box to the user
-        vscode.window.showInformationMessage('Hello!');
+        const items : [ResourceStep] = [
+            {
+                label: 'APIs: DigitalOcean: Install CLI',
+                description: null,
+                terminalCommand: 'brew install doctl',
+            },
+            {
+                label: 'APIs: DigitalOcean: Authorize CLI',
+                description: null,
+                terminalCommand: 'doctl auth',
+                message: 'This will ask for an API token. To get it, log into digitalocean.com, select the API tab, generate a new token, and copy it to the clipboard.'
+            },
+            {
+                label: 'Servers: DigitalOcean: List Droplets',
+                description: null,
+                terminalCommand: 'doctl compute droplet list',
+            },
+            {
+                label: 'Servers: DigitalOcean: List Droplets w/ JSON',
+                description: null,
+                terminalCommand: 'doctl compute droplet list -o json',
+            },
+        ]
+        vscode.window.showQuickPick(items,
+            { placeHolder: "type an API, a type of resource, and an action" }).then(item => {
+                if (!terminal) {
+                    terminal = vscode.window.createTerminal('resources');
+                }
+                terminal.show();
+                if (item.message) {
+                    vscode.window.showInformationMessage(item.message);
+                }
+                terminal.sendText(item.terminalCommand, false);
+            })
     });
 
     context.subscriptions.push(disposable);

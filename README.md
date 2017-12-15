@@ -7,7 +7,7 @@ integrations using docs and tools from [resources.co](https://resources.co/).
 
 ### Quick API Assist
 
-When you enter the code (Command-Shift-@ or ^-Shift-@), the Quick API Assist tool will be shown.
+When you enter the code (Cmd+Shift+R or Ctrl+Shift+R), the Quick API Assist tool will be shown.
 
 ## Requirements
 
